@@ -25,3 +25,27 @@ class Node{
         right = NULL;
     }
 };
+bool isBSTUtil(Node* root, int min, int max){
+    if(root == NULL) return true;
+    if(root->val < min || root->val > max)
+        return false;
+    return isBSTUtil(root->left, min, root->val-1) && isBSTUtil(root->right, root->val-1, max);
+}
+
+bool isBST(Node* root){
+    //we check each vale with a max and min value
+    //initially they are INT_MAX and INT_MIN
+    return isBSTUtil(root, INT_MIN, INT_MAX);
+}
+
+int main(){
+    Node* tree;
+    tree = new Node(5);
+    tree->left = new Node(2);
+    tree->right = new Node(8);
+    tree->left->left = new Node(1);
+    tree->left->right = new Node(4);
+    tree->right->right = new Node(10);
+    if(isBST(tree)) cout << "YES";
+    else cout << "No";
+}
